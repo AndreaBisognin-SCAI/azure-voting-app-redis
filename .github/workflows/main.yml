@@ -40,6 +40,13 @@ jobs:
       - name: Setup kubectl
         id: install-kubectl
         uses: azure/setup-kubectl@v3
+      - name: kubelogin
+        run: |
+          kubelogin convert-kubeconfig -l spn
+          kubectl get nodes
+        env:
+          AAD_SERVICE_PRINCIPAL_CLIENT_ID: ${{ secrets.service_principal }}
+          AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: ${{ secrets.service_principal_password }}        
       - name: Deploy to AKS
         id: deploy-aks
         uses: Azure/k8s-deploy@v4
