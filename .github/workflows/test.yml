@@ -1,0 +1,24 @@
+name: build_deploy_aks
+on: 
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code 
+        uses: actions/checkout@v3
+      - name: Set up kubelogin for non-interactive login
+        uses: azure/use-kubelogin@v1
+        with:
+           kubelogin-version: 'v0.0.24'
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3           
+      - name: kubelogin
+        run: |
+          echo "AAD_SERVICE_PRINCIPAL_CLIENT_ID is ${AAD_SERVICE_PRINCIPAL_CLIENT_ID}"
+          kubelogin convert-kubeconfig -l spn
+          kubectl get nodes
+        env:
+          AAD_SERVICE_PRINCIPAL_CLIENT_ID: ${{ secrets.secrets.service_principal }}
+          AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: ${{ secrets.service_principal_password }}
