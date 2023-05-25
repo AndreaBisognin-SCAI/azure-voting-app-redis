@@ -1,4 +1,4 @@
-name: build_deploy_aks
+name: test
 on: 
   workflow_dispatch:
 jobs:
@@ -16,7 +16,7 @@ jobs:
         uses: azure/setup-kubectl@v3           
       - name: kubelogin
         run: |
-          echo "AAD_SERVICE_PRINCIPAL_CLIENT_ID is ${AAD_SERVICE_PRINCIPAL_CLIENT_ID}"
+          echo "AAD_SERVICE_PRINCIPAL_CLIENT_ID is ${{ AAD_SERVICE_PRINCIPAL_CLIENT_ID }}"
           kubelogin convert-kubeconfig -l spn
           kubectl get nodes
         env:
