@@ -16,9 +16,11 @@ jobs:
         uses: azure/setup-kubectl@v3           
       - name: kubelogin
         run: |
+          echo "FOO is $FOO"
           echo "AAD_SERVICE_PRINCIPAL_CLIENT_ID is ${{ env.AAD_SERVICE_PRINCIPAL_CLIENT_ID }}"
           kubelogin convert-kubeconfig -l spn
           kubectl get nodes
         env:
+          FOO: BAR
           AAD_SERVICE_PRINCIPAL_CLIENT_ID: ${{ secrets.secrets.service_principal }}
           AAD_SERVICE_PRINCIPAL_CLIENT_SECRET: ${{ secrets.service_principal_password }}
