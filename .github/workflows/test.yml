@@ -17,7 +17,7 @@ jobs:
       - name: kubelogin
         run: |
           echo "FOO is $FOO"
-          echo "AAD_SERVICE_PRINCIPAL_CLIENT_ID is ${{ AAD_SERVICE_PRINCIPAL_CLIENT_ID }}"
+          echo "AAD_SERVICE_PRINCIPAL_CLIENT_ID is $AAD_SERVICE_PRINCIPAL_CLIENT_ID"
           kubelogin convert-kubeconfig -l spn
           kubectl get nodes
         env:
